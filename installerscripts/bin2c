@@ -1,0 +1,13 @@
+!#/bin/bash
+
+#bin2c Installation Script
+bin2curl="https://raw.githubusercontent.com/gnmmarechal/3ds-dev-tool-installer/master/files/bin2c/bin2c.c"
+
+rm -rf bin2c.c
+curl -o bin2c.c $bin2curl
+gcc -o bin2c bin2c.c
+rm -rf bin2c.c
+cp bin2c /bin/bin2c
+rm -rf bin2c
+
+echo "Installed package bin2c"

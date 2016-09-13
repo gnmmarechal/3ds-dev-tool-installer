@@ -1,8 +1,38 @@
 #!/bin/bash
+# 3DS APT-GET-like thingy
 
 #Check for arguments
-arg1 = "$1"
-if [ arg1 == ""]
-  then
-    echo No arguments provided.
-fi  
+arg1="$1"
+arg2="$2"
+
+#Install curl
+echo "Installing curl..."
+apt-get install curl
+echo "Installing wget..."
+apt-get install wget
+echo "Installing git..."
+apt-get install git
+echo "Installing gcc/g++..."
+apt-get install gcc g++
+
+#Script
+if [ "$arg1" = "" ] 
+then
+	echo "ERROR! No argument provided."
+elif [ "$arg2" = "" ]
+then
+	echo "ERROR! Missing argument."
+else
+	echo "Looking for package..."
+	wget -q --spider "https://raw.githubusercontent.com/gnmmarechal/3ds-dev-tool-installer/master/installscripts/$2"
+	if [ "$?" = 0 ] #Resource was found
+	then
+		echo "Package found. Executing instructions..."
+		rm -rf script.sh
+		curl -o script.sh https://raw.githubusercontent.com/gnmmarechal/3ds-dev-tool-installer/master/installscripts/$2
+		chmod +x script.sh
+		./script.sh
+	else	
+		echo "Package $2 not found."
+	fi
+fi
